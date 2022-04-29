@@ -3,6 +3,10 @@ const morgan = require('morgan');
 const helmet = require('helmet');
 const cors = require('cors');
 const config = require('config');
+const mongoose = require('mongoose');
+
+const db = config.get('db');
+mongoose.connect(db);
 
 const app = express();
 
