@@ -1,3 +1,4 @@
 {
+    "db": "mongodb://localhost/ecommerce-backend",
     "port": "3000"
 }
