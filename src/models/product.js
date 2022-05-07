@@ -1,24 +1,37 @@
 const mongoose = require('mongoose');
+const { Category } = require('./category');
+const { Subcategory } = require('./subcategory');
 
 const productSchema = mongoose.Schema({
     name: {
         type: String,
-        unique: true,
-        required: true
+        required: [true, 'Name is required'],
+        validate: {
+            validator: async name => !await Product.findOne({ name }),
+            message: 'Name already exists'
+        }
     },
     description: {
         type: String,
-        required: true
+        required: [true, 'Description is required']
     },
     categoryId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Category',
-        required: true
+        required: [true, 'Category ID is required'],
+        validate: {
+            validator: async id => !!await Category.findById(id),
+            message: 'Category ID does not exist'
+        }
     },
     subcategoryId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Subcategory',
-        required: true
+        required: [true, 'Subcategory ID is required'],
+        validate: {
+            validator: async id => !!await Subcategory.findById(id),
+            message: 'Subcategory ID does not exist'
+        }
     }
 });
 

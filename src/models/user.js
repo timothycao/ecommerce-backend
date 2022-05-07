@@ -3,20 +3,23 @@ const mongoose = require('mongoose');
 const userSchema = mongoose.Schema({
     name: {
         type: String,
-        required: true
+        required: [true, 'Name is required']
     },
     email: {
         type: String,
-        unique: true,
-        required: true
+        required: [true, 'Email is required'],
+        validate: {
+            validator: async email => !await User.findOne({ email }),
+            message: 'Email already used'
+        }
     },
     address: {
         type: String,
-        required: true
+        required: [true, 'Address is required']
     },
     password: {
         type: String,
-        required: true
+        required: [true, 'Password is required']
     },
     admin: {
         type: Boolean,
