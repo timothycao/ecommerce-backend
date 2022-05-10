@@ -5,8 +5,8 @@ const createUser = async (createBody) => {
     return user;
 };
 
-const getUsers = async () => {
-    const users = await User.find();
+const getUsers = async (query) => {
+    const users = await User.find(query);
     return users;
 };
 

@@ -5,8 +5,8 @@ const createReview = async (createBody) => {
     return review;
 };
 
-const getReviews = async () => {
-    const reviews = await Review.find();
+const getReviews = async (query) => {
+    const reviews = await Review.find(query);
     return reviews;
 };
 

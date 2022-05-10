@@ -5,8 +5,8 @@ const createSubcategory = async (createBody) => {
     return subcategory;
 };
 
-const getSubcategories = async () => {
-    const subcategories = await Subcategory.find();
+const getSubcategories = async (query) => {
+    const subcategories = await Subcategory.find(query);
     return subcategories;
 };
 

@@ -1,3 +1,4 @@
+const pick = require('../utils/pick');
 const service = require('../services/reviews');
 
 const createReview = async (req, res) => {
@@ -6,7 +7,8 @@ const createReview = async (req, res) => {
 };
 
 const getReviews = async (req, res) => {
-    const reviews = await service.getReviews();
+    const query = pick(req.query, 'rating', 'comment', 'userId', 'productVariantId');
+    const reviews = await service.getReviews(query);
     res.send(reviews);
 };
 

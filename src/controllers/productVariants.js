@@ -1,3 +1,4 @@
+const pick = require('../utils/pick');
 const service = require('../services/productVariants');
 
 const createProductVariant = async (req, res) => {
@@ -6,7 +7,8 @@ const createProductVariant = async (req, res) => {
 };
 
 const getProductVariants = async (req, res) => {
-    const productVariants = await service.getProductVariants();
+    const query = pick(req.query, 'color', 'size', 'price', 'stock', 'images', 'productId');
+    const productVariants = await service.getProductVariants(query);
     res.send(productVariants);
 };
 

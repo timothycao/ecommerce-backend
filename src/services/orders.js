@@ -5,8 +5,8 @@ const createOrder = async (createBody) => {
     return order;
 };
 
-const getOrders = async () => {
-    const orders = await Order.find();
+const getOrders = async (query) => {
+    const orders = await Order.find(query);
     return orders;
 };
 

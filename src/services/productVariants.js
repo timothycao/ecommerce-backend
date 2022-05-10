@@ -5,8 +5,8 @@ const createProductVariant = async (createBody) => {
     return productVariant;
 };
 
-const getProductVariants = async () => {
-    const productVariants = await ProductVariant.find();
+const getProductVariants = async (query) => {
+    const productVariants = await ProductVariant.find(query);
     return productVariants;
 };
 
