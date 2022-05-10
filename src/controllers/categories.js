@@ -1,3 +1,4 @@
+const pick = require('../utils/pick');
 const service = require('../services/categories');
 
 const createCategory = async (req, res) => {
@@ -6,7 +7,8 @@ const createCategory = async (req, res) => {
 };
 
 const getCategories = async (req, res) => {
-    const categories = await service.getCategories();
+    const query = pick(req.query, 'name');
+    const categories = await service.getCategories(query);
     res.send(categories);
 };
 

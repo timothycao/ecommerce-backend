@@ -1,3 +1,4 @@
+const pick = require('../utils/pick');
 const service = require('../services/users');
 
 const createUser = async (req, res) => {
@@ -6,7 +7,8 @@ const createUser = async (req, res) => {
 };
 
 const getUsers = async (req, res) => {
-    const users = await service.getUsers();
+    const query = pick(req.query, 'name', 'email', 'address', 'admin');
+    const users = await service.getUsers(query);
     res.send(users);
 };
 

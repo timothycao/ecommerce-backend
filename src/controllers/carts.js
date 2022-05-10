@@ -1,3 +1,4 @@
+const pick = require('../utils/pick');
 const service = require('../services/carts');
 
 const createCart = async (req, res) => {
@@ -6,7 +7,8 @@ const createCart = async (req, res) => {
 };
 
 const getCarts = async (req, res) => {
-    const carts = await service.getCarts();
+    const query = pick(req.query, 'products', 'total', 'userId');
+    const carts = await service.getCarts(query);
     res.send(carts);
 };
 

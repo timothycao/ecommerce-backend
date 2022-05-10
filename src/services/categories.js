@@ -5,8 +5,8 @@ const createCategory = async (createBody) => {
     return category;
 };
 
-const getCategories = async () => {
-    const categories = await Category.find();
+const getCategories = async (query) => {
+    const categories = await Category.find(query);
     return categories;
 };
 
