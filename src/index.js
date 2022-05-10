@@ -23,5 +23,15 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
+// routes middleware
+app.use('/api/categories', require('./routes/categories'));
+app.use('/api/subcategories', require('./routes/subcategories'));
+app.use('/api/products', require('./routes/products'));
+app.use('/api/productvariants', require('./routes/productVariants'));
+app.use('/api/users', require('./routes/users'));
+app.use('/api/reviews', require('./routes/reviews'));
+app.use('/api/carts', require('./routes/carts'));
+app.use('/api/orders', require('./routes/orders'));
+
 const port = config.get('port');
 app.listen(port, () => console.log(`Listening on port ${port}...`));
