@@ -15,6 +15,11 @@ const getUser = async (id) => {
     return user;
 };
 
+const getUserByEmail = async (email) => {
+    const user = await User.findOne({ email });
+    return user;
+{  }};
+
 const updateUser = async (id, updateBody) => {
     const user = await getUser(id);
     Object.assign(user, updateBody);
@@ -32,6 +37,7 @@ module.exports = {
     createUser,
     getUsers,
     getUser,
+    getUserByEmail,
     updateUser,
     deleteUser
 };
