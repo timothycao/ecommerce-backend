@@ -18,13 +18,15 @@ const getReview = async (req, res) => {
 };
 
 const updateReview = async (req, res) => {
-    const review = await service.updateReview(req.params.id, req.body);
-    res.send(review);
+    const review = await service.getReview(req.params.id);
+    const updatedReview = await service.updateReview(review, req.body);
+    res.send(updatedReview);
 };
 
 const deleteReview = async (req, res) => {
-    const review = await service.deleteReview(req.params.id);
-    res.send(review);
+    const review = await service.getReview(req.params.id);
+    const deletedReview = await service.deleteReview(review);
+    res.send(deletedReview);
 };
 
 module.exports = {

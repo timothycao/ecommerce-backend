@@ -15,15 +15,13 @@ const getCart = async (id) => {
     return cart;
 };
 
-const updateCart = async (id, updateBody) => {
-    const cart = await getCart(id);
+const updateCart = async (cart, updateBody) => {
     Object.assign(cart, updateBody);
     await cart.save();
     return cart;
 };
 
-const deleteCart = async (id) => {
-    const cart = await getCart(id);
+const deleteCart = async (cart) => {
     await cart.remove();
     return cart;
 };

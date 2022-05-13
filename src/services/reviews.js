@@ -15,15 +15,13 @@ const getReview = async (id) => {
     return review;
 };
 
-const updateReview = async (id, updateBody) => {
-    const review = await getReview(id);
+const updateReview = async (review, updateBody) => {
     Object.assign(review, updateBody);
     await review.save();
     return review;
 };
 
-const deleteReview = async (id) => {
-    const review = await getReview(id);
+const deleteReview = async (review) => {
     await review.remove();
     return review;
 };

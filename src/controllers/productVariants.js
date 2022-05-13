@@ -18,13 +18,15 @@ const getProductVariant = async (req, res) => {
 };
 
 const updateProductVariant = async (req, res) => {
-    const productVariant = await service.updateProductVariant(req.params.id, req.body);
-    res.send(productVariant);
+    const productVariant = await service.getProductVariant(req.params.id);
+    const updatedProductVariant = await service.updateProductVariant(productVariant, req.body);
+    res.send(updatedProductVariant);
 };
 
 const deleteProductVariant = async (req, res) => {
-    const productVariant = await service.deleteProductVariant(req.params.id);
-    res.send(productVariant);
+    const productVariant = await service.getProductVariant(req.params.id);
+    const deletedProductVariant = await service.deleteProductVariant(productVariant);
+    res.send(deletedProductVariant);
 };
 
 module.exports = {

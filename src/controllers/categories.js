@@ -18,13 +18,15 @@ const getCategory = async (req, res) => {
 };
 
 const updateCategory = async (req, res) => {
-    const category = await service.updateCategory(req.params.id, req.body);
-    res.send(category);
+    const category = await service.getCategory(req.params.id);
+    const updatedCategory = await service.updateCategory(category, req.body);
+    res.send(updatedCategory);
 };
 
 const deleteCategory = async (req, res) => {
-    const category = await service.deleteCategory(req.params.id);
-    res.send(category);
+    const category = await service.getCategory(req.params.id);
+    const deletedCategory = await service.deleteCategory(category);
+    res.send(deletedCategory);
 };
 
 module.exports = {

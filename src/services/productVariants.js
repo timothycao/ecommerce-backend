@@ -15,15 +15,13 @@ const getProductVariant = async (id) => {
     return productVariant;
 };
 
-const updateProductVariant = async (id, updateBody) => {
-    const productVariant = await getProductVariant(id);
+const updateProductVariant = async (productVariant, updateBody) => {
     Object.assign(productVariant, updateBody);
     await productVariant.save();
     return productVariant;
 };
 
-const deleteProductVariant = async (id) => {
-    const productVariant = await getProductVariant(id);
+const deleteProductVariant = async (productVariant) => {
     await productVariant.remove();
     return productVariant;
 };

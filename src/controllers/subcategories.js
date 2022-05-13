@@ -18,13 +18,15 @@ const getSubcategory = async (req, res) => {
 };
 
 const updateSubcategory = async (req, res) => {
-    const subcategory = await service.updateSubcategory(req.params.id, req.body);
-    res.send(subcategory);
+    const subcategory = await service.getSubcategory(req.params.id);
+    const updatedSubcategory = await service.updateSubcategory(subcategory, req.body);
+    res.send(updatedSubcategory);
 };
 
 const deleteSubcategory = async (req, res) => {
-    const subcategory = await service.deleteSubcategory(req.params.id);
-    res.send(subcategory);
+    const subcategory = await service.getSubcategory(req.params.id);
+    const deletedSubcategory = await service.deleteSubcategory(subcategory);
+    res.send(deletedSubcategory);
 };
 
 module.exports = {

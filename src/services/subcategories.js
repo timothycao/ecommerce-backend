@@ -15,15 +15,13 @@ const getSubcategory = async (id) => {
     return subcategory;
 };
 
-const updateSubcategory = async (id, updateBody) => {
-    const subcategory = await getSubcategory(id);
+const updateSubcategory = async (subcategory, updateBody) => {
     Object.assign(subcategory, updateBody);
     await subcategory.save();
     return subcategory;
 };
 
-const deleteSubcategory = async (id) => {
-    const subcategory = await getSubcategory(id);
+const deleteSubcategory = async (subcategory) => {
     await subcategory.remove();
     return subcategory;
 };

@@ -18,13 +18,15 @@ const getUser = async (req, res) => {
 };
 
 const updateUser = async (req, res) => {
-    const user = await service.updateUser(req.params.id, req.body);
-    res.send(user);
+    const user = await service.getUser(req.params.id);
+    const updatedUser = await service.updateUser(user, req.body);
+    res.send(updatedUser);
 };
 
 const deleteUser = async (req, res) => {
-    const user = await service.deleteUser(req.params.id);
-    res.send(user);
+    const user = await service.getUser(req.params.id);
+    const deletedUser = await service.deleteUser(user);
+    res.send(deletedUser);
 };
 
 module.exports = {

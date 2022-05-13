@@ -15,15 +15,13 @@ const getOrder = async (id) => {
     return order;
 };
 
-const updateOrder = async (id, updateBody) => {
-    const order = await getOrder(id);
+const updateOrder = async (order, updateBody) => {
     Object.assign(order, updateBody);
     await order.save();
     return order;
 };
 
-const deleteOrder = async (id) => {
-    const order = await getOrder(id);
+const deleteOrder = async (order) => {
     await order.remove();
     return order;
 };
