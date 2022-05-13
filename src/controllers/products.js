@@ -18,13 +18,15 @@ const getProduct = async (req, res) => {
 };
 
 const updateProduct = async (req, res) => {
-    const product = await service.updateProduct(req.params.id, req.body);
-    res.send(product);
+    const product = await service.getProduct(req.params.id);
+    const updatedProduct = await service.updateProduct(product, req.body);
+    res.send(updatedProduct);
 };
 
 const deleteProduct = async (req, res) => {
-    const product = await service.deleteProduct(req.params.id);
-    res.send(product);
+    const product = await service.getProduct(req.params.id);
+    const deletedProduct = await service.deleteProduct(product);
+    res.send(deletedProduct);
 };
 
 module.exports = {

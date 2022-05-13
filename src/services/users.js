@@ -20,15 +20,13 @@ const getUserByEmail = async (email) => {
     return user;
 {  }};
 
-const updateUser = async (id, updateBody) => {
-    const user = await getUser(id);
+const updateUser = async (user, updateBody) => {
     Object.assign(user, updateBody);
     await user.save();
     return user;
 };
 
-const deleteUser = async (id) => {
-    const user = await getUser(id);
+const deleteUser = async (user) => {
     await user.remove();
     return user;
 };

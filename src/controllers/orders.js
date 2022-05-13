@@ -18,13 +18,15 @@ const getOrder = async (req, res) => {
 };
 
 const updateOrder = async (req, res) => {
-    const order = await service.updateOrder(req.params.id, req.body);
-    res.send(order);
+    const order = await service.getOrder(req.params.id);
+    const updatedOrder = await service.updateOrder(order, req.body);
+    res.send(updatedOrder);
 };
 
 const deleteOrder = async (req, res) => {
-    const order = await service.deleteOrder(req.params.id);
-    res.send(order);
+    const order = await service.getOrder(req.params.id);
+    const deletedOrder = await service.deleteOrder(order);
+    res.send(deletedOrder);
 };
 
 module.exports = {

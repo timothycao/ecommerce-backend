@@ -18,13 +18,15 @@ const getCart = async (req, res) => {
 };
 
 const updateCart = async (req, res) => {
-    const cart = await service.updateCart(req.params.id, req.body);
-    res.send(cart);
+    const cart = await service.getCart(req.params.id);
+    const updatedCart = await service.updateCart(cart, req.body);
+    res.send(updatedCart);
 };
 
 const deleteCart = async (req, res) => {
-    const cart = await service.deleteCart(req.params.id);
-    res.send(cart);
+    const cart = await service.getCart(req.params.id);
+    const deletedCart = await service.deleteCart(cart);
+    res.send(deletedCart);
 };
 
 module.exports = {
