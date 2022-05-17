@@ -3,9 +3,9 @@ const { ProductVariant } = require('./productVariant');
 const { User } = require('./user');
 
 const cartSchema = mongoose.Schema({
-    products: [
+    items: [
         {
-            product: {
+            productVariantId: {
                 type: mongoose.Schema.Types.ObjectId,
                 ref: 'ProductVariant',
                 required: [true, 'Product Variant ID is required'],
@@ -14,10 +14,10 @@ const cartSchema = mongoose.Schema({
                     message: 'Product Variant ID does not exist'
                 }
             },
-            count: {
+            quantity: {
                 type: Number,
-                required: [true, 'Count is requred'],
-                min: [0, 'Count cannot be less than 0']
+                required: [true, 'Quantity is required'],
+                min: [1, 'Quantity cannot be less than 1']
             }
         }
     ],
