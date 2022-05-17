@@ -14,4 +14,9 @@ router.put('/cart/empty', auth, controller.emptyCart);
 router.post('/orders', auth, controller.placeOrder);
 router.get('/orders', auth, controller.getOrders);
 
+router.post('/reviews', auth, controller.createReview);
+router.get('/reviews', auth, controller.getReviews);
+router.put('/reviews/:id', auth, controller.updateReview);
+router.delete('/reviews/:id', auth, controller.deleteReview);
+
 module.exports = router;
