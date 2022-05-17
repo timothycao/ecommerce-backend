@@ -21,6 +21,14 @@ const updateProductVariant = async (productVariant, updateBody) => {
     return productVariant;
 };
 
+const updateProductVariantStock = async (id, number) => {
+    return ProductVariant.findByIdAndUpdate(
+        id,
+        { $inc: { stock: number } },
+        { new: true }
+    );
+};
+
 const deleteProductVariant = async (productVariant) => {
     await productVariant.remove();
     return productVariant;
@@ -31,5 +39,6 @@ module.exports = {
     getProductVariants,
     getProductVariant,
     updateProductVariant,
+    updateProductVariantStock,
     deleteProductVariant
 };

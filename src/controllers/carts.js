@@ -7,7 +7,7 @@ const createCart = async (req, res) => {
 };
 
 const getCarts = async (req, res) => {
-    const query = pick(req.query, 'products', 'total', 'userId');
+    const query = pick(req.query, 'items', 'total', 'userId');
     const carts = await service.getCarts(query);
     res.send(carts);
 };
