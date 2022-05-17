@@ -1,14 +1,16 @@
-const service = require('../services/auth');
+const authService = require('../services/auth');
+const cartsService = require('../services/carts');
 
 const register = async (req, res) => {
-    const user = await service.register(req.body);
-    const token = await service.generateToken(user);
+    const user = await authService.register(req.body);
+    const token = await authService.generateToken(user);
+    const cart = await cartsService.createCart({ userId: user._id, total: 0 });
     res.header('X-Auth-Token', token).send(user);
 };
 
 const login = async (req, res) => {
-    const user = await service.login(req.body.email, req.body.password);
-    const token = await service.generateToken(user);
+    const user = await authService.login(req.body.email, req.body.password);
+    const token = await authService.generateToken(user);
     res.header('X-Auth-Token', token).send(user);
 };
 
