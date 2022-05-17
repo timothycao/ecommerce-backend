@@ -2,6 +2,7 @@ const usersService = require('../services/users');
 const cartsService = require('../services/carts');
 const ordersService = require('../services/orders');
 const productVariantsService = require('../services/productVariants');
+const reviewsService = require('../services/reviews');
 
 const getUser = async (req, res) => {
     const user = await usersService.getUser(req.user._id);
@@ -61,6 +62,54 @@ const getOrders = async (req, res) => {
     res.send(orders);
 };
 
+const createReview = async (req, res) => {
+    const { rating, comment, productVariantId } = req.body;
+    // check if product variant has been purchased
+    const orders = await ordersService.getOrders({ userId: req.user._id });
+    let purchased = false;
+    for (let i = 0; i < orders.length; i++) {
+        const order = orders[i];
+        for (let j = 0; j < order.items.length; j++) {
+            const item = order.items[j];
+            if (item.productVariantId.valueOf() === productVariantId) purchased = true;
+        }
+    };
+    if (!purchased) return res.status(403).send('You have not purchased this product variant');
+    // check if review already exists
+    const reviews = await reviewsService.getReviews({ userId: req.user._id, productVariantId });
+    if (!!reviews[0]) return res.status(403).send('You have already made a review for this product variant');
+    // create review
+    const review = await reviewsService.createReview({ rating, comment, userId: req.user._id, productVariantId });
+    // respond with created review
+    res.send(review);
+};
+
+const getReviews = async (req, res) => {
+    const reviews = await reviewsService.getReviews({ userId: req.user._id });
+    res.send(reviews);
+};
+
+const updateReview = async (req, res) => {
+    // check if review belongs to user
+    const review = await reviewsService.getReview(req.params.id);
+    if (req.user._id !== review.userId.valueOf()) return res.status(401).send('You are not authorized to update this review');
+    // update review
+    const { _id, __v, userId, productVariantId, ...updateBody } = req.body;
+    const updatedReview = await reviewsService.updateReview(review, updateBody);
+    // respond with updated review
+    res.send(updatedReview);
+};
+
+const deleteReview = async (req, res) => {
+    // check if review belongs to user
+    const review = await reviewsService.getReview(req.params.id);
+    if (req.user._id !== review.userId.valueOf()) return res.status(401).send('You are not authorized to update this review');
+    // delete review
+    const deletedReview = await reviewsService.deleteReview(review);
+    // respond with deleted review
+    res.send(deletedReview);
+};
+
 module.exports = {
     getUser,
     updateUser,
@@ -69,5 +118,9 @@ module.exports = {
     addToCart,
     emptyCart,
     placeOrder,
-    getOrders
+    getOrders,
+    createReview,
+    getReviews,
+    updateReview,
+    deleteReview
 };
