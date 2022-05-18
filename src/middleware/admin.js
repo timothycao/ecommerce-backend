@@ -1,5 +1,5 @@
 const admin = (req, res, next) => {
-    if (!req.user.admin) return res.status(403).send('Admin access only');
+    if (!req.user.admin) throw { code: 403, message: 'Admin is required for access' };
     next();
 };
 

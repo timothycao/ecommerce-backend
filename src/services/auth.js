@@ -15,14 +15,22 @@ const generateToken = async (user) => {
 };
 
 const register = async (createBody) => {
-    const user = await service.createUser(createBody);
-    return user;
+    try {
+        const user = await service.createUser(createBody);
+        return user;
+    } catch (error) {
+        throw error;
+    }
 };
 
 const login = async (email, password) => {
-    const user = await service.getUserByEmail(email);
-    if (!await user.checkPassword(password)) return;
-    return user;
+    try {        
+        const user = await service.getUserByEmail(email);
+        if (!await user.checkPassword(password)) throw { code: 401, message: 'Wrong password' };
+        return user;
+    } catch (error) {
+        throw error;
+    }
 };
 
 const logout = async () => {};

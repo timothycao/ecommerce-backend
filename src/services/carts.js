@@ -2,22 +2,29 @@ const { Cart } = require('../models/cart');
 const service = require('../services/productVariants');
 
 const createCart = async (createBody) => {
-    const cart = await Cart.create(createBody);
-    return cart;
+    try {
+        const cart = await Cart.create(createBody);
+        return cart;
+    } catch (error) {
+        throw { code: 400, message: error.message };
+    }
 };
 
 const getCarts = async (query) => {
     const carts = await Cart.find(query);
+    if (!carts.length) throw { code: 404, message: 'No carts found' };
     return carts;
 };
 
 const getCart = async (id) => {
     const cart = await Cart.findById(id);
+    if (!cart) throw { code: 404, message: 'No cart found with the given ID' };
     return cart;
 };
 
 const getCartByUserId = async (userId) => {
     const cart = await Cart.findOne({ userId });
+    if (!cart) throw { code: 404, message: 'No cart found with the given user ID' };
     return cart;
 };
 
@@ -33,9 +40,13 @@ const updateCart = async (cart, updateBody) => {
         }
     }
 
-    Object.assign(cart, { items, total });
-    await cart.save();
-    return cart;
+    try {
+        Object.assign(cart, { items, total });
+        await cart.save();
+        return cart;
+    } catch (error) {
+        throw { code: 400, message: error.message };
+    }
 };
 
 const addToCart = async (cart, itemObj) => {

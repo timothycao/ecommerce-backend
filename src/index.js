@@ -35,5 +35,8 @@ app.use('/api/reviews', require('./routes/reviews'));
 app.use('/api/carts', require('./routes/carts'));
 app.use('/api/orders', require('./routes/orders'));
 
+// error handling middleware
+app.use(require('./middleware/error'));
+
 const port = config.get('port');
 app.listen(port, () => console.log(`Listening on port ${port}...`));
