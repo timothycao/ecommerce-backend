@@ -6,8 +6,16 @@ const productSchema = mongoose.Schema({
     name: {
         type: String,
         required: [true, 'Name is required'],
+        
         validate: {
-            validator: async name => !await Product.findOne({ name }),
+            validator: async function (name) {
+                const user = await this.constructor.findOne({ name });
+                if (user) {
+                    if (this.id === user.id) return true;
+                    return false;
+                }
+                return true;
+            },
             message: 'Name already exists'
         }
     },

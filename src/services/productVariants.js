@@ -32,12 +32,12 @@ const updateProductVariant = async (productVariant, updateBody) => {
 };
 
 const updateProductVariantStock = async (id, number) => {
-    try {        
-        return ProductVariant.findByIdAndUpdate(
-            id,
-            { $inc: { stock: number } },
-            { new: true }
-        );
+    try {
+        const productVariant = await ProductVariant.findById(id);
+        if (productVariant.stock - number < 0) throw { code: 400, message: 'Stock cannot be less than 0'};
+        productVariant.stock += number;
+        await productVariant.save();
+        return productVariant;
     } catch (error) {
         throw { code: 400, message: error.message };
     }

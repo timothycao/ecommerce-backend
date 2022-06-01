@@ -11,7 +11,7 @@ const createReview = async (createBody) => {
 
 const getReviews = async (query) => {
     const reviews = await Review.find(query);
-    if (!reviews.length) throw { code: 404, message: 'No reviews found' };
+    // if (!reviews.length) throw { code: 404, message: 'No reviews found' };
     return reviews;
 };
 

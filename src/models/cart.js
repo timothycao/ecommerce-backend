@@ -5,6 +5,7 @@ const { User } = require('./user');
 const cartSchema = mongoose.Schema({
     items: [
         {
+            _id: false,
             productVariantId: {
                 type: mongoose.Schema.Types.ObjectId,
                 ref: 'ProductVariant',
