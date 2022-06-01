@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon src",
-    "test": "NODE_ENV=test jest --watchAll --verbose"
+    "test": "NODE_ENV=test jest --watchAll --verbose --maxWorkers=1"
   },
   "author": "",
   "license": "ISC",

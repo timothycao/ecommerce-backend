@@ -45,15 +45,16 @@ const placeOrder = asyncHandler(async (req, res) => {
     // get user cart
     const cart = await cartsService.getCartByUserId(req.user._id);
     const { items, total, userId } = cart;
-    // empty cart
-    await cartsService.emptyCart(cart);
-    // create order
-    const order = await ordersService.createOrder({ items, total, userId });
+    if (items.length === 0) throw { code: 403, message: 'You have no items in your cart for purchase'};
     // decrement stock
     for (let i = 0; i < items.length; i++) {
         const item = items[i];
         await productVariantsService.updateProductVariantStock(item.productVariantId, -item.quantity);
     };
+    // create order
+    const order = await ordersService.createOrder({ items, total, userId });
+    // empty cart
+    await cartsService.emptyCart(cart);
     // respond with created order
     res.send(order);
 });
@@ -77,8 +78,13 @@ const createReview = asyncHandler(async (req, res) => {
     };
     if (!purchased) throw { code: 403, message: 'You have not purchased this product variant' };
     // check if review already exists
-    const reviews = await reviewsService.getReviews({ userId: req.user._id, productVariantId });
-    if (!!reviews[0]) throw { code: 403, message: 'You have already made a review for this product variant' };
+    const reviews = await reviewsService.getReviews({ userId: req.user._id });
+    let reviewed = false;
+    for (let i = 0; i < reviews.length; i++) {
+        const review = reviews[i];
+        if (review.productVariantId.valueOf() === productVariantId) reviewed = true;
+    };
+    if (reviewed) throw { code: 403, message: 'You have already made a review for this product variant' };
     // create review
     const review = await reviewsService.createReview({ rating, comment, userId: req.user._id, productVariantId });
     // respond with created review

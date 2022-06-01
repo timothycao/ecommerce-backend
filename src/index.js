@@ -39,4 +39,6 @@ app.use('/api/orders', require('./routes/orders'));
 app.use(require('./middleware/error'));
 
 const port = config.get('port');
-app.listen(port, () => console.log(`Listening on port ${port}...`));
+const server = app.listen(port, () => console.log(`Listening on port ${port}...`));
+
+module.exports = server;

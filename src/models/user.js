@@ -10,7 +10,14 @@ const userSchema = mongoose.Schema({
         type: String,
         required: [true, 'Email is required'],
         validate: {
-            validator: async email => !await User.findOne({ email }),
+            validator: async function (email) {
+                const user = await this.constructor.findOne({ email });
+                if (user) {
+                    if (this.id === user.id) return true;
+                    return false;
+                }
+                return true;
+            },
             message: 'Email already used'
         }
     },

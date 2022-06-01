@@ -32,6 +32,7 @@ const updateCart = async (cart, updateBody) => {
     let { items, total } = updateBody;
 
     if (!total) {
+        if (!items) return cart;
         total = 0;
         for (let i = 0; i < items.length; i++) {
             const item = items[i];
